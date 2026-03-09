@@ -10,7 +10,7 @@ import Foundation
 
 // MARK: - Article Domain Model
 
-nonisolated struct Article: Identifiable, Hashable, Sendable {
+nonisolated struct Article: Identifiable, Hashable, Sendable, Codable {
     let id: String
     let title: String
     let description: String?
@@ -34,7 +34,7 @@ nonisolated struct Article: Identifiable, Hashable, Sendable {
 }
 
 // MARK: - News Category
-nonisolated enum NewsCategory: String, CaseIterable, Identifiable, Sendable {
+nonisolated enum NewsCategory: String, CaseIterable, Identifiable, Sendable, Codable {
     case general = "general"
     case business = "business"
     case technology = "technology"
@@ -71,7 +71,7 @@ nonisolated enum NewsCategory: String, CaseIterable, Identifiable, Sendable {
 }
 
 // MARK: - Pagination
-nonisolated struct PaginatedArticles: Sendable {
+nonisolated struct PaginatedArticles: Sendable, Codable {
     let articles: [Article]
     let totalResults: Int
     let currentPage: Int

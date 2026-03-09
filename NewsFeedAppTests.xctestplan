@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "0C458DBE-6525-49C6-92C3-5791B6EDFD79",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "performanceAntipatternCheckerEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:NewsFeedApp.xcodeproj",
+        "identifier" : "42CFE8B82F5C6AB400F29E40",
+        "name" : "NewsFeedAppTests"
+      }
+    }
+  ],
+  "version" : 1
+}

@@ -27,6 +27,7 @@
 		42CFE8A32F5C6AB200F29E40 /* NewsFeedApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsFeedApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		42CFE8B92F5C6AB400F29E40 /* NewsFeedAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewsFeedAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		42CFE8C32F5C6AB400F29E40 /* NewsFeedAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewsFeedAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		42CFE9A42F5E6B5300F29E40 /* NewsFeedAppTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; name = NewsFeedAppTests.xctestplan; path = ../NewsFeedAppTests.xctestplan; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -88,6 +89,7 @@
 		42CFE89A2F5C6AB200F29E40 = {
 			isa = PBXGroup;
 			children = (
+				42CFE9A42F5E6B5300F29E40 /* NewsFeedAppTests.xctestplan */,
 				42CFE8A52F5C6AB200F29E40 /* NewsFeedApp */,
 				42CFE8BC2F5C6AB400F29E40 /* NewsFeedAppTests */,
 				42CFE8C62F5C6AB400F29E40 /* NewsFeedAppUITests */,

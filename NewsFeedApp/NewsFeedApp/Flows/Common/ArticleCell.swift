@@ -96,6 +96,7 @@ final class ArticleCell: UICollectionViewCell {
     }()
 
     private var imageTask: URLSessionDataTask?
+    private var currentImageURL: URL?
     var onBookmarkTapped: (() -> Void)?
 
     // MARK: - Init
@@ -108,7 +109,9 @@ final class ArticleCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         imageTask?.cancel()
+        currentImageURL = nil
         thumbnailImageView.image = nil
+        thumbnailImageView.tintColor = nil
         categoryLabel.text = nil
         onBookmarkTapped = nil
     }
@@ -190,16 +193,21 @@ final class ArticleCell: UICollectionViewCell {
     }
 
     private func loadImage(from url: URL) {
-        imageTask = URLSession.shared.dataTask(with: url) { [weak self] data, _, _ in
-            guard let data = data, let image = UIImage(data: data) else { return }
-            DispatchQueue.main.async {
-                UIView.transition(with: self?.thumbnailImageView ?? UIImageView(),
-                                  duration: 0.2, options: .transitionCrossDissolve) {
-                    self?.thumbnailImageView.image = image
-                }
+        currentImageURL = url
+        thumbnailImageView.image = UIImage(systemName: "photo")
+        thumbnailImageView.tintColor = .tertiaryLabel
+
+        imageTask = ImageLoader.shared.loadImage(from: url) { [weak self] image in
+            guard let self, self.currentImageURL == url else { return }
+            guard let image else { return }
+
+            UIView.transition(with: self.thumbnailImageView,
+                              duration: 0.2,
+                              options: .transitionCrossDissolve) {
+                self.thumbnailImageView.image = image
+                self.thumbnailImageView.tintColor = nil
             }
         }
-        imageTask?.resume()
     }
 
     @objc private func bookmarkTapped() {

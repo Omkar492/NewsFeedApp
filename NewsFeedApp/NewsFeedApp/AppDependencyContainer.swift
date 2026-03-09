@@ -15,9 +15,10 @@ final class AppDependencyContainer {
     // MARK: - Core
     private lazy var apiClient: APIClientProtocol = URLSessionAPIClient()
     private lazy var coreDataStack: CoreDataStack = .shared
+    private lazy var articleCacheStore = ArticleCacheStore()
 
     // MARK: - Repositories
-    lazy var newsRepository: NewsRepositoryProtocol = NewsRepository(apiClient: apiClient)
+    lazy var newsRepository: NewsRepositoryProtocol = NewsRepository(apiClient: apiClient, articleCacheStore: articleCacheStore)
     lazy var bookmarkRepository: BookmarkRepositoryProtocol = BookmarkRepository(coreDataStack: coreDataStack)
 
     // MARK: - Use Cases
