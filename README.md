@@ -15,6 +15,10 @@ The app supports:
 | -- | -- | 
 | <img width="1206" height="2622" alt="Simulator Screenshot - iPhone 17 Pro - 2026-03-09 at 09 00 37" src="https://github.com/user-attachments/assets/996ac814-925f-4397-b5f4-00bd72590d0b" /> | <img width="1206" height="2622" alt="Simulator Screenshot - iPhone 17 Pro - 2026-03-09 at 09 01 04" src="https://github.com/user-attachments/assets/10c31b78-e9ae-4af3-a003-11cdc4d0e4a7" /> | 
 
+| Bookmark | Search |
+| -- | -- |
+| ![Simulator Screen Recording - iPhone 17 Pro - 2026-03-09 at 09 28 22](https://github.com/user-attachments/assets/dcce25d2-0741-45a4-b3e5-ca6717a35daf) | ![Simulator Screen Recording - iPhone 17 Pro - 2026-03-09 at 09 29 59](https://github.com/user-attachments/assets/f46b08f5-6ea0-43f7-aa7a-7d21d4d6c071) |
+
 
 ## Tech Stack
 
@@ -127,7 +131,7 @@ Why Core Data here:
 
 Clone the repository and locate and open the xcodeproj file:
 
-- `git clone <>`
+- `git clone https://github.com/Omkar492/NewsFeedApp.git`
 
 ### 2. Configure the API key
 
