@@ -36,7 +36,9 @@ final class NetworkLayerTests: XCTestCase {
     }
 
     func testTopHeadlinesRequestBuildsExpectedURLRequest() throws {
-        let request = TopHeadlinesRequest(category: .technology, page: 2, pageSize: 20)
+        let request = TopHeadlinesRequest(category: .technology,
+                                          page: 2,
+                                          pageSize: AppConstants.Network.defaultPageSize)
 
         let urlRequest = try request.buildURLRequest()
         let components = URLComponents(url: try XCTUnwrap(urlRequest.url), resolvingAgainstBaseURL: false)
@@ -44,10 +46,10 @@ final class NetworkLayerTests: XCTestCase {
 
         XCTAssertEqual(urlRequest.httpMethod, "GET")
         XCTAssertEqual(components?.path, "/v2/top-headlines")
-        XCTAssertEqual(queryItems["country"], "us")
+        XCTAssertEqual(queryItems["country"], AppConstants.Network.country)
         XCTAssertEqual(queryItems["category"], "technology")
         XCTAssertEqual(queryItems["page"], "2")
-        XCTAssertEqual(queryItems["pageSize"], "20")
+        XCTAssertEqual(queryItems["pageSize"], "\(AppConstants.Network.defaultPageSize)")
         XCTAssertEqual(urlRequest.value(forHTTPHeaderField: "Accept"), "application/json")
     }
 

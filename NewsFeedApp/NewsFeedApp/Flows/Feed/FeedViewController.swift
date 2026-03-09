@@ -44,24 +44,24 @@ final class FeedViewController: UIViewController {
     }()
 
     private lazy var emptyView = EmptyStateView(
-        systemImage: "newspaper",
-        title: "No Articles",
-        subtitle: "Pull to refresh to load the latest news.",
-        actionTitle: "Retry"
+        systemImage: AppConstants.Symbols.newspaper,
+        title: AppConstants.Messages.feedEmptyTitle,
+        subtitle: AppConstants.Messages.feedEmptySubtitle,
+        actionTitle: AppConstants.Messages.retry
     )
 
     private lazy var errorView = EmptyStateView(
-        systemImage: "wifi.exclamationmark",
-        title: "Couldn't Load News",
-        subtitle: "Check your connection and try again.",
-        actionTitle: "Retry"
+        systemImage: AppConstants.Symbols.wifiExclamation,
+        title: AppConstants.Messages.feedErrorTitle,
+        subtitle: AppConstants.Messages.feedErrorSubtitle,
+        actionTitle: AppConstants.Messages.retry
     )
 
     // MARK: - Init
     init(viewModel: FeedViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        title = "News"
+        title = AppConstants.Titles.news
     }
     required init?(coder: NSCoder) { fatalError() }
 
@@ -179,10 +179,10 @@ final class FeedViewController: UIViewController {
             showOverlay(emptyView)
         case .error(let error):
             loadingView.stopAnimating()
-            errorView = EmptyStateView(systemImage: "wifi.exclamationmark",
-                                       title: "Couldn't Load News",
+            errorView = EmptyStateView(systemImage: AppConstants.Symbols.wifiExclamation,
+                                       title: AppConstants.Messages.feedErrorTitle,
                                        subtitle: error.errorDescription ?? "",
-                                       actionTitle: "Retry")
+                                       actionTitle: AppConstants.Messages.retry)
             errorView.onActionTapped = { [weak self] in self?.viewModel.refresh() }
             showOverlay(errorView)
         }
@@ -244,26 +244,31 @@ final class FeedViewController: UIViewController {
     }
 
     private func makeCategorySection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(100), heightDimension: .absolute(36))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(100),
+                                              heightDimension: .absolute(AppConstants.Layout.categoryChipHeight))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(100), heightDimension: .absolute(36))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(100),
+                                               heightDimension: .absolute(AppConstants.Layout.categoryChipHeight))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
-        section.interGroupSpacing = 8
-        section.contentInsets = NSDirectionalEdgeInsets(top: 12, leading: 16, bottom: 12, trailing: 16)
+        section.interGroupSpacing = AppConstants.Layout.categorySectionSpacing
+        section.contentInsets = AppConstants.Layout.categorySectionInset
         return section
     }
 
     private func makeArticlesSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(300))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                              heightDimension: .estimated(AppConstants.Layout.estimatedArticleHeight))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(300))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                               heightDimension: .estimated(AppConstants.Layout.estimatedArticleHeight))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         section.interGroupSpacing = 0
 
-        let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50))
+        let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                heightDimension: .absolute(AppConstants.Layout.footerHeight))
         let footer = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: footerSize,
             elementKind: UICollectionView.elementKindSectionFooter,

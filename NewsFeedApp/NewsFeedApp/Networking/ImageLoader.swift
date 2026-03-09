@@ -15,9 +15,9 @@ final class ImageLoader {
     private let urlCache: URLCache
 
     private init() {
-        self.urlCache = URLCache(memoryCapacity: 20 * 1024 * 1024,
-                                 diskCapacity: 100 * 1024 * 1024,
-                                 diskPath: "ImageLoaderCache")
+        self.urlCache = URLCache(memoryCapacity: AppConstants.Images.memoryCacheSize,
+                                 diskCapacity: AppConstants.Images.diskCacheSize,
+                                 diskPath: AppConstants.Images.cacheDirectoryName)
         let configuration = URLSessionConfiguration.default
         configuration.requestCachePolicy = .returnCacheDataElseLoad
         configuration.urlCache = urlCache
@@ -32,7 +32,9 @@ final class ImageLoader {
             return nil
         }
 
-        let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 30)
+        let request = URLRequest(url: url,
+                                 cachePolicy: .returnCacheDataElseLoad,
+                                 timeoutInterval: AppConstants.Network.requestTimeout)
 
         if let cachedResponse = urlCache.cachedResponse(for: request),
            let image = UIImage(data: cachedResponse.data) {

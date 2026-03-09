@@ -17,7 +17,7 @@ protocol FetchHeadlinesUseCaseProtocol {
 final class FetchHeadlinesUseCase: FetchHeadlinesUseCaseProtocol {
     private let newsRepository: NewsRepositoryProtocol
     private let bookmarkRepository: BookmarkRepositoryProtocol
-    private let pageSize: Int = 20
+    private let pageSize: Int = AppConstants.Network.defaultPageSize
 
     init(newsRepository: NewsRepositoryProtocol, bookmarkRepository: BookmarkRepositoryProtocol) {
         self.newsRepository = newsRepository
@@ -49,7 +49,7 @@ protocol SearchArticlesUseCaseProtocol {
 final class SearchArticlesUseCase: SearchArticlesUseCaseProtocol {
     private let newsRepository: NewsRepositoryProtocol
     private let bookmarkRepository: BookmarkRepositoryProtocol
-    private let pageSize: Int = 20
+    private let pageSize: Int = AppConstants.Network.defaultPageSize
 
     init(newsRepository: NewsRepositoryProtocol, bookmarkRepository: BookmarkRepositoryProtocol) {
         self.newsRepository = newsRepository

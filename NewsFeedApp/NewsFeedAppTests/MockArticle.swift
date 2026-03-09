@@ -44,7 +44,10 @@ struct MockArticle {
     }
 
     static func makePaginated(articles: [Article] = makeList(count: 10), total: Int = 50, page: Int = 1) -> PaginatedArticles {
-        PaginatedArticles(articles: articles, totalResults: total, currentPage: page, pageSize: 20)
+        PaginatedArticles(articles: articles,
+                          totalResults: total,
+                          currentPage: page,
+                          pageSize: AppConstants.Network.defaultPageSize)
     }
 }
 

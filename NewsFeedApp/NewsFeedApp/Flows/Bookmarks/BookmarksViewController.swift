@@ -24,9 +24,9 @@ final class BookmarksViewController: UIViewController {
     }()
 
     private lazy var emptyView = EmptyStateView(
-        systemImage: "bookmark",
-        title: "No Bookmarks Yet",
-        subtitle: "Save articles while reading and they'll appear here."
+        systemImage: AppConstants.Symbols.bookmark,
+        title: AppConstants.Messages.bookmarksEmptyTitle,
+        subtitle: AppConstants.Messages.bookmarksEmptySubtitle
     )
 
     private let loadingView: UIActivityIndicatorView = {
@@ -40,7 +40,7 @@ final class BookmarksViewController: UIViewController {
     init(viewModel: BookmarksViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        title = "Bookmarks"
+        title = AppConstants.Titles.bookmarks
     }
     required init?(coder: NSCoder) { fatalError() }
 
@@ -142,16 +142,20 @@ final class BookmarksViewController: UIViewController {
     }
 
     private func showError(_ error: AppError) {
-        let alert = UIAlertController(title: "Error", message: error.errorDescription, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        let alert = UIAlertController(title: AppConstants.Titles.error,
+                                      message: error.errorDescription,
+                                      preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: AppConstants.Messages.ok, style: .default))
         present(alert, animated: true)
     }
 
     // MARK: - Layout
     private func makeLayout() -> UICollectionViewCompositionalLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(300))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                              heightDimension: .estimated(AppConstants.Layout.estimatedArticleHeight))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(300))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                               heightDimension: .estimated(AppConstants.Layout.estimatedArticleHeight))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
         return UICollectionViewCompositionalLayout(section: section)
@@ -173,8 +177,8 @@ extension BookmarksViewController: UICollectionViewDelegate {
                         point: CGPoint) -> UIContextMenuConfiguration? {
         guard let article = dataSource.itemIdentifier(for: indexPath) else { return nil }
         return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { _ in
-            let delete = UIAction(title: "Remove Bookmark",
-                                  image: UIImage(systemName: "bookmark.slash"),
+            let delete = UIAction(title: AppConstants.Messages.removeBookmark,
+                                  image: UIImage(systemName: AppConstants.Symbols.bookmarkSlash),
                                   attributes: .destructive) { [weak self] _ in
                 self?.viewModel.removeBookmark(article)
             }

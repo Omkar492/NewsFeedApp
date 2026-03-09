@@ -71,7 +71,7 @@ final class ArticleCell: UICollectionViewCell {
 
     private let bookmarkButton: UIButton = {
         var config = UIButton.Configuration.filled()
-        config.image = UIImage(systemName: "bookmark")
+        config.image = UIImage(systemName: AppConstants.Symbols.bookmark)
         config.baseForegroundColor = UIColor { traitCollection in
             traitCollection.userInterfaceStyle == .dark ? .black : .white
         }
@@ -81,7 +81,10 @@ final class ArticleCell: UICollectionViewCell {
             : UIColor.black.withAlphaComponent(0.8)
         }
         config.cornerStyle = .capsule
-        config.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10)
+        config.contentInsets = NSDirectionalEdgeInsets(top: AppConstants.Layout.bookmarkButtonContentInset,
+                                                       leading: AppConstants.Layout.bookmarkButtonContentInset,
+                                                       bottom: AppConstants.Layout.bookmarkButtonContentInset,
+                                                       trailing: AppConstants.Layout.bookmarkButtonContentInset)
         let b = UIButton(configuration: config)
         b.translatesAutoresizingMaskIntoConstraints = false
         return b
@@ -127,13 +130,13 @@ final class ArticleCell: UICollectionViewCell {
         if let imageURL = article.imageURL {
             loadImage(from: imageURL)
         } else {
-            thumbnailImageView.image = UIImage(systemName: "newspaper.fill")
+            thumbnailImageView.image = UIImage(systemName: AppConstants.Symbols.newspaperFill)
             thumbnailImageView.tintColor = .tertiaryLabel
         }
     }
 
     func updateBookmarkIcon(isBookmarked: Bool) {
-        let imageName = isBookmarked ? "bookmark.fill" : "bookmark"
+        let imageName = isBookmarked ? AppConstants.Symbols.bookmarkFill : AppConstants.Symbols.bookmark
         bookmarkButton.configuration?.image = UIImage(systemName: imageName)
     }
 
@@ -152,34 +155,34 @@ final class ArticleCell: UICollectionViewCell {
         bookmarkButton.setContentCompressionResistancePriority(.required, for: .horizontal)
 
         NSLayoutConstraint.activate([
-            containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 4),
-            containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-            containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -4),
+            containerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: AppConstants.Layout.articleCardVerticalInset),
+            containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: AppConstants.Layout.articleCardHorizontalInset),
+            containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -AppConstants.Layout.articleCardHorizontalInset),
+            containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -AppConstants.Layout.articleCardVerticalInset),
 
             thumbnailImageView.topAnchor.constraint(equalTo: containerView.topAnchor),
             thumbnailImageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             thumbnailImageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            thumbnailImageView.heightAnchor.constraint(equalToConstant: 180),
+            thumbnailImageView.heightAnchor.constraint(equalToConstant: AppConstants.Layout.articleImageHeight),
 
-            bookmarkButton.topAnchor.constraint(equalTo: thumbnailImageView.topAnchor, constant: 12),
-            bookmarkButton.trailingAnchor.constraint(equalTo: thumbnailImageView.trailingAnchor, constant: -12),
+            bookmarkButton.topAnchor.constraint(equalTo: thumbnailImageView.topAnchor, constant: AppConstants.Layout.bookmarkOverlayInset),
+            bookmarkButton.trailingAnchor.constraint(equalTo: thumbnailImageView.trailingAnchor, constant: -AppConstants.Layout.bookmarkOverlayInset),
 
-            categoryLabel.topAnchor.constraint(equalTo: thumbnailImageView.bottomAnchor, constant: 12),
-            categoryLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
-            categoryLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12),
+            categoryLabel.topAnchor.constraint(equalTo: thumbnailImageView.bottomAnchor, constant: AppConstants.Layout.articleContentInset),
+            categoryLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: AppConstants.Layout.articleContentInset),
+            categoryLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -AppConstants.Layout.articleContentInset),
 
             titleLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 4),
-            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
-            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12),
+            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: AppConstants.Layout.articleContentInset),
+            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -AppConstants.Layout.articleContentInset),
 
             sourceDateStack.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8),
-            sourceDateStack.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 12),
-            sourceDateStack.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -12),
-            sourceDateStack.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -12),
+            sourceDateStack.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: AppConstants.Layout.articleContentInset),
+            sourceDateStack.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -AppConstants.Layout.articleContentInset),
+            sourceDateStack.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -AppConstants.Layout.articleContentInset),
 
-            bookmarkButton.widthAnchor.constraint(equalToConstant: 44),
-            bookmarkButton.heightAnchor.constraint(equalToConstant: 44)
+            bookmarkButton.widthAnchor.constraint(equalToConstant: AppConstants.Layout.bookmarkButtonSize),
+            bookmarkButton.heightAnchor.constraint(equalToConstant: AppConstants.Layout.bookmarkButtonSize)
         ])
 
         bookmarkButton.addTarget(self, action: #selector(bookmarkTapped), for: .touchUpInside)
@@ -194,7 +197,7 @@ final class ArticleCell: UICollectionViewCell {
 
     private func loadImage(from url: URL) {
         currentImageURL = url
-        thumbnailImageView.image = UIImage(systemName: "photo")
+        thumbnailImageView.image = UIImage(systemName: AppConstants.Symbols.photo)
         thumbnailImageView.tintColor = .tertiaryLabel
 
         imageTask = ImageLoader.shared.loadImage(from: url) { [weak self] image in

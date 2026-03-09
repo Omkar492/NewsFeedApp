@@ -96,7 +96,9 @@ final class NewsRepository: NewsRepositoryProtocol {
     }
 
     func fetchTrending() -> AnyPublisher<[Article], AppError> {
-        let request = TopHeadlinesRequest(category: .general, page: 1, pageSize: 5)
+        let request = TopHeadlinesRequest(category: .general,
+                                          page: 1,
+                                          pageSize: AppConstants.Network.trendingPageSize)
         let cacheKey = CacheKey.trending.rawValue
         return apiClient.perform(request)
             .map { response in

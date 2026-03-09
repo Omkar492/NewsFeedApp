@@ -20,7 +20,7 @@ final class SearchViewController: UIViewController {
     // MARK: - UI
     private lazy var searchController: UISearchController = {
         let sc = UISearchController(searchResultsController: nil)
-        sc.searchBar.placeholder = "Search news, topics, sources…"
+        sc.searchBar.placeholder = AppConstants.Messages.searchPlaceholder
         sc.obscuresBackgroundDuringPresentation = false
         sc.searchBar.delegate = self
         sc.searchResultsUpdater = self
@@ -36,22 +36,22 @@ final class SearchViewController: UIViewController {
     }()
 
     private lazy var idleView = EmptyStateView(
-        systemImage: "magnifyingglass",
-        title: "Search for News",
-        subtitle: "Type a keyword to find articles on any topic."
+        systemImage: AppConstants.Symbols.magnifyingGlass,
+        title: AppConstants.Messages.searchIdleTitle,
+        subtitle: AppConstants.Messages.searchIdleSubtitle
     )
 
     private lazy var emptyView = EmptyStateView(
-        systemImage: "doc.text.magnifyingglass",
-        title: "No Results",
-        subtitle: "Try a different keyword or check your spelling."
+        systemImage: AppConstants.Symbols.searchEmpty,
+        title: AppConstants.Messages.searchEmptyTitle,
+        subtitle: AppConstants.Messages.searchEmptySubtitle
     )
 
     private lazy var errorView = EmptyStateView(
-        systemImage: "exclamationmark.circle",
-        title: "Search Failed",
-        subtitle: "Please try again.",
-        actionTitle: "Retry"
+        systemImage: AppConstants.Symbols.exclamation,
+        title: AppConstants.Messages.searchErrorTitle,
+        subtitle: AppConstants.Messages.searchErrorSubtitle,
+        actionTitle: AppConstants.Messages.retry
     )
 
     private let loadingView: UIActivityIndicatorView = {
@@ -65,7 +65,7 @@ final class SearchViewController: UIViewController {
     init(viewModel: SearchViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        title = "Search"
+        title = AppConstants.Titles.search
     }
     required init?(coder: NSCoder) { fatalError() }
 
@@ -156,8 +156,8 @@ final class SearchViewController: UIViewController {
             showOverlay(emptyView)
         case .error(let error):
             loadingView.stopAnimating()
-            let ev = EmptyStateView(systemImage: "exclamationmark.circle",
-                                    title: "Search Failed",
+            let ev = EmptyStateView(systemImage: AppConstants.Symbols.exclamation,
+                                    title: AppConstants.Messages.searchErrorTitle,
                                     subtitle: error.errorDescription ?? "Unknown error",
                                     actionTitle: nil)
             showOverlay(ev)
@@ -194,12 +194,15 @@ final class SearchViewController: UIViewController {
 
     // MARK: - Layout
     private func makeLayout() -> UICollectionViewCompositionalLayout {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(300))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                              heightDimension: .estimated(AppConstants.Layout.estimatedArticleHeight))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .estimated(300))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                               heightDimension: .estimated(AppConstants.Layout.estimatedArticleHeight))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
         let section = NSCollectionLayoutSection(group: group)
-        let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(50))
+        let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                                heightDimension: .absolute(AppConstants.Layout.footerHeight))
         let footer = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: footerSize,
                                                                  elementKind: UICollectionView.elementKindSectionFooter,
                                                                  alignment: .bottom)

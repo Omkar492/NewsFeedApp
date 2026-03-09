@@ -32,7 +32,9 @@ extension APIRequest {
         var components = URLComponents(url: baseURL.appendingPathComponent(path), resolvingAgainstBaseURL: true)
         components?.queryItems = queryItems
         guard let url = components?.url else { throw AppError.invalidURL }
-        var request = URLRequest(url: url, cachePolicy: .useProtocolCachePolicy, timeoutInterval: 30)
+        var request = URLRequest(url: url,
+                                 cachePolicy: .useProtocolCachePolicy,
+                                 timeoutInterval: AppConstants.Network.requestTimeout)
         request.httpMethod = method.rawValue
         request.setValue("application/json", forHTTPHeaderField: "Accept")
         headers?.forEach { request.setValue($1, forHTTPHeaderField: $0) }

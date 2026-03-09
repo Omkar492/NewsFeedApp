@@ -97,21 +97,21 @@ final class DetailViewController: UIViewController {
         navigationItem.largeTitleDisplayMode = .never
 
         bookmarkBarButton = UIBarButtonItem(
-            image: UIImage(systemName: viewModel.isBookmarked ? "bookmark.fill" : "bookmark"),
+            image: UIImage(systemName: viewModel.isBookmarked ? AppConstants.Symbols.bookmarkFill : AppConstants.Symbols.bookmark),
             style: .plain,
             target: self,
             action: #selector(toggleBookmark)
         )
 
         let shareButton = UIBarButtonItem(
-            image: UIImage(systemName: "square.and.arrow.up"),
+            image: UIImage(systemName: AppConstants.Symbols.share),
             style: .plain,
             target: self,
             action: #selector(shareArticle)
         )
 
         let safariButton = UIBarButtonItem(
-            image: UIImage(systemName: "safari"),
+            image: UIImage(systemName: AppConstants.Symbols.safari),
             style: .plain,
             target: self,
             action: #selector(openInSafari)
@@ -124,7 +124,7 @@ final class DetailViewController: UIViewController {
         viewModel.$isBookmarked
             .receive(on: DispatchQueue.main)
             .sink { [weak self] isBookmarked in
-                let imageName = isBookmarked ? "bookmark.fill" : "bookmark"
+                let imageName = isBookmarked ? AppConstants.Symbols.bookmarkFill : AppConstants.Symbols.bookmark
                 self?.bookmarkBarButton.image = UIImage(systemName: imageName)
                 self?.animateBookmarkChange()
             }
@@ -184,13 +184,13 @@ extension DetailViewController: WKNavigationDelegate {
     }
 
     private func showWebError() {
-        let alert = UIAlertController(title: "Couldn't Load Article",
-                                      message: "Would you like to open it in Safari instead?",
+        let alert = UIAlertController(title: AppConstants.Messages.detailWebErrorTitle,
+                                      message: AppConstants.Messages.detailWebErrorMessage,
                                       preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Open in Safari", style: .default) { [weak self] _ in
+        alert.addAction(UIAlertAction(title: AppConstants.Messages.openInSafari, style: .default) { [weak self] _ in
             self?.openInSafari()
         })
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
+        alert.addAction(UIAlertAction(title: AppConstants.Messages.cancel, style: .cancel))
         present(alert, animated: true)
     }
 }

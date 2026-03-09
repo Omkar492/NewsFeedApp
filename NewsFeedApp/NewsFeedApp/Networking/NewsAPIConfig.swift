@@ -33,7 +33,7 @@ struct TopHeadlinesRequest: APIRequest {
     var queryItems: [URLQueryItem]? {
         [
             URLQueryItem(name: "apiKey", value: NewsAPIConfig.apiKey),
-            URLQueryItem(name: "country", value: "us"),
+            URLQueryItem(name: "country", value: AppConstants.Network.country),
             URLQueryItem(name: "category", value: category.rawValue),
             URLQueryItem(name: "page", value: "\(page)"),
             URLQueryItem(name: "pageSize", value: "\(pageSize)")
@@ -56,8 +56,8 @@ struct SearchArticlesRequest: APIRequest {
         [
             URLQueryItem(name: "apiKey", value: NewsAPIConfig.apiKey),
             URLQueryItem(name: "q", value: query),
-            URLQueryItem(name: "language", value: "en"),
-            URLQueryItem(name: "sortBy", value: "publishedAt"),
+            URLQueryItem(name: "language", value: AppConstants.Network.language),
+            URLQueryItem(name: "sortBy", value: AppConstants.Network.searchSortBy),
             URLQueryItem(name: "page", value: "\(page)"),
             URLQueryItem(name: "pageSize", value: "\(pageSize)")
         ]
