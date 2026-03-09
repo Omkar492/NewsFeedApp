@@ -1,6 +1,6 @@
 # NewsFeedApp
 
-An iOS news reader built with UIKit, Combine, and a lightweight layered architecture.
+An iOS news reader built with UIKit, Combine, and a lightweight MVVM layered architecture.
 
 The app supports:
 - Top headlines by category
